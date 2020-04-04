@@ -11,14 +11,17 @@
   },
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.0.0",
-    "express": "^4.17.0",
-    "express-handlebars": "^3.1.0",
-    "mysql2": "^1.6.5",
-    "sequelize": "^5.8.6"
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.2",
+    "mssql": "^6.2.0",
+    "mysql2": "^2.1.0",
+    "node-spotify-api": "^1.1.1",
+    "sequelize": "^5.21.5",
+    "spotify": "^0.3.0"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
