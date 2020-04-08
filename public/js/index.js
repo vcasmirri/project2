@@ -4,25 +4,13 @@ var $movieText = $("#movie-text");
 var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $movieList = $("#movie-list");
-var $exampleList = $("#example-list");
+var $todoList = $("#example-list");
 var addButton = $("<button>").text("Add to To Dos");
 
 
 // // The API object contains methods for each kind of request we'll make
-var API = {
-<<<<<<< HEAD
-  saveExample: function (example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  getExamples: function () {
-=======
+var todoList = {
+  // getExamples: function () {
 //   saveExample: function(example) {
 //     return $.ajax({
 //       headers: {
@@ -33,33 +21,32 @@ var API = {
 //       data: JSON.stringify(example)
 //     });
 //   },
-  getExamples: function() {
->>>>>>> 30b6330e9248acebdd79528e23bdfcec4557f22e
+  getTodo: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/todo",
       type: "GET"
     });
   },
-  deleteExample: function (id) {
+  deleteTodo: function (id) {
     return $.ajax({
-      url: "api/examples/" + id,
+      url: "api/todo/" + id,
       type: "DELETE"
     });
   }
 };
 
 // refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function () {
-  API.getExamples().then(function (data) {
-    var $examples = data.map(function (example) {
+var refreshTodo = function () {
+  todoList.getTodo().then(function (data) {
+    var $todo = data.map(function (todo) {
       var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+        .text(todo.text)
+        .attr("href", "/todo/" + todo.id);
 
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": todo.id
         })
         .append($a);
 
@@ -72,20 +59,14 @@ var refreshExamples = function () {
       return $li;
     });
 
-    $exampleList.empty();
-    $exampleList.append($examples);
+    $todoList.empty();
+    $todoList.append($todo);
   });
 };
 
-<<<<<<< HEAD
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function (event) {
-=======
-refreshExamples();
+refreshTodo();
 
 var handleFormSubmit = function(event) {
->>>>>>> 30b6330e9248acebdd79528e23bdfcec4557f22e
   event.preventDefault();
   var movieQuery
   movieQuery = $movieText.val().trim().split(" ").join("+");
@@ -124,37 +105,20 @@ var addtoToDo = function(event) {
   var newAdd = {
     text: this.id
   };
-<<<<<<< HEAD
-
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
-  }
-
-  API.saveExample(example).then(function () {
-=======
   $.ajax("/api/examples", {
     type: "POST",
     data: newAdd
   }).then(function () {
     console.log("new movie posted")
->>>>>>> 30b6330e9248acebdd79528e23bdfcec4557f22e
     refreshExamples();
   });
 };
 
-<<<<<<< HEAD
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function () {
-  var idToDelete = $(this)
-=======
     // handleDeleteBtnClick is called when an example's delete button is clicked
     // Remove the example from the db and refresh the list
 var handleDeleteBtnClick = function() {
     // need to add functionality so it adds it to the timeline here as well
     var idToDelete = $(this)
->>>>>>> 30b6330e9248acebdd79528e23bdfcec4557f22e
     .parent()
     .attr("data-id");
 
@@ -165,7 +129,7 @@ var handleDeleteBtnClick = function() {
 
 // // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+$todoList.on("click", ".delete", handleDeleteBtnClick);
 addButton.on("click", addtoToDo);
 
 
