@@ -5,7 +5,7 @@ var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $movieList = $("#movie-list");
 var $todoList = $("#example-list");
-var addButton = $("<button>").text("Add to To Dos");
+var addButton;
 
 
 // // The API object contains methods for each kind of request we'll make
@@ -79,10 +79,11 @@ var handleFormSubmit = function(event) {
     var newMovieTitle = $("<p>").text("Movie Title: " + response.Title).attr("id", "newMovie-heading");
     var newMoviePlot = $("<p>").text("Plot: " + response.Plot);
     var newMoviePoster = $("<img>").attr("src",  response.Poster);
-    addButton.attr("id", response.Title);
+    addButton =  $("<button>").text("Add to To Dos").attr("id", response.Title);
     // originally created var for button here and then appended
     
     $movieList.prepend(newMovieTitle, newMoviePlot, newMoviePoster, addButton);
+    addButton.on("click", addtoToDo);
   });  
   
   //   // var example = {
@@ -130,7 +131,6 @@ var handleDeleteBtnClick = function() {
 // // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $todoList.on("click", ".delete", handleDeleteBtnClick);
-addButton.on("click", addtoToDo);
 
 
 // // Get references to page elements
