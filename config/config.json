@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "thurisaz1020",
+    "password": "mysql",
     "database": "quarantine_db",
     "host": "localhost",
     "dialect": "mysql"

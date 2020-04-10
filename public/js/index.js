@@ -10,6 +10,7 @@ var $bookList = $("#book-list");
 var $gameList = $("#game-list");
 var $exampleDescription = $("#example-description");
 var $exampleList = $("#example-list");
+var addMovieButton;
 
 // // The API object contains methods for each kind of request we'll make
 var API = {
@@ -23,6 +24,14 @@ var API = {
 //       data: JSON.stringify(example)
 //     });
 //   },
+
+  addCompleted: function(doneTask) {
+    return $.ajax({
+      url: "api/completed",
+      type: "POST",
+      data: JSON.stringify(doneTask)
+    });
+  },
   getExamples: function() {
     return $.ajax({
       url: "api/examples",
@@ -54,7 +63,8 @@ var refreshExamples = function() {
 
       var $button = $("<button>")
         .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
+        .text("ｘ")
+        .attr("id", example.text);
 
       $li.append($button);
 
@@ -81,7 +91,7 @@ var handleMovieFormSubmit = function(event) {
     var newMovieTitle = $("<p>").text("Movie Title: " + response.Title).attr("id", "newMovie-heading");
     var newMoviePlot = $("<p>").text("Plot: " + response.Plot);
     var newMoviePoster = $("<img>").attr("src",  response.Poster);
-    var addMovieButton =  $('<button>').text("Add to To Dos").attr("id", response.Title).addClass("btn btn-primary");
+    addMovieButton =  $('<button>').text("Add to To Dos").attr("id", response.Title).addClass("btn btn-primary");
     
     $movieList.append('<li>');
     $movieList.append(newMovieTitle, newMoviePlot, newMoviePoster, addMovieButton);
@@ -89,16 +99,6 @@ var handleMovieFormSubmit = function(event) {
 
     addMovieButton.on("click", addtoToDo);
   });  
-  
-  //   // var example = {
-    //   //   text: $exampleText.val().trim(),
-    //   //   description: $exampleDescription.val().trim()
-    //   // };
-    
-    //   // API.saveExample(example).then(function() {
-      //   //   refreshExamples();
-      //   // });
-      
   $movieText.val("");    
 };
   
@@ -126,58 +126,37 @@ var handleBookFormSubmit = function(event) {
       addBookButton.on("click", addtoToDo);
     });
   });
+  $bookText.val("");    
+};
 
+var handleGameFormSubmit = function(event) {
+  event.preventDefault();
+  var gameQuery;
+  gameQuery = $gameText.val().trim().split(" ").join("+");
+  console.log("The game query is: " + gameQuery);
   
-  
-  //   // var example = {
-    //   //   text: $exampleText.val().trim(),
-    //   //   description: $exampleDescription.val().trim()
-    //   // };
+  $.ajax({
+    url: "https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/search/?api_key=9a02d4d2e88aa4d1ec2e2c72519e9b710c37136e&format=json&query=" + gameQuery,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+    var newGameTitle = $("<p>").text("Game Title: " + response.results[0].name).attr("id", "newGame-heading");
+    var newGameDesc = $("<p>").text("Description: " + response.results[0].deck);
+    var newGameImage = $("<img>").attr("src",  response.results[0].image.thumb_url);
+    var addGameButton =  $('<button>').text("Add to To Dos").attr("id", response.results[0].name).addClass("btn btn-primary");
     
-    //   // API.saveExample(example).then(function() {
-      //   //   refreshExamples();
-      //   // });
-      
-      $bookText.val("");    
-    };
-        var handleGameFormSubmit = function(event) {
-          event.preventDefault();
-          var gameQuery;
-          gameQuery = $gameText.val().trim().split(" ").join("+");
-          console.log("The game query is: " + gameQuery);
-          
-          $.ajax({
-            url: "https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/search/?api_key=9a02d4d2e88aa4d1ec2e2c72519e9b710c37136e&format=json&query=" + gameQuery,
-            method: "GET"
-          }).then(function(response) {
-            console.log(response);
-            var newGameTitle = $("<p>").text("Game Title: " + response.results[0].name).attr("id", "newGame-heading");
-            var newGameDesc = $("<p>").text("Description: " + response.results[0].deck);
-            var newGameImage = $("<img>").attr("src",  response.results[0].image.thumb_url);
-            var addGameButton =  $('<button>').text("Add to To Dos").attr("id", response.results[0].name).addClass("btn btn-primary");
-            
-            $gameList.append('<li>');
-            $gameList.append(newGameTitle, newGameDesc, newGameImage, addGameButton);
-            $gameList.append('</li>');
-        
-            addGameButton.on("click", addtoToDo);
-          });  
-          
-          //   // var example = {
-            //   //   text: $exampleText.val().trim(),
-            //   //   description: $exampleDescription.val().trim()
-            //   // };
-            
-            //   // API.saveExample(example).then(function() {
-              //   //   refreshExamples();
-              //   // });
-              
-          $gameText.val("");    
-        };
+    $gameList.append('<li>');
+    $gameList.append(newGameTitle, newGameDesc, newGameImage, addGameButton);
+    $gameList.append('</li>');
+
+    addGameButton.on("click", addtoToDo);
+  });  
+  $gameText.val("");    
+};
     
 var addtoToDo = function(event) {
-  // originally in the .then part of create movie 
-  console.log("add button clicked")
+  console.log("add button clicked");
+  console.log(this.id);
   event.preventDefault();
   var newAdd = {
     text: this.id
@@ -190,13 +169,32 @@ var addtoToDo = function(event) {
   });
 };
 
-    // handleDeleteBtnClick is called when an example's delete button is clicked
-    // Remove the example from the db and refresh the list
+var completedDate;
+function getDate() {
+  completedDate = new Date();
+  return completedDate;
+}
+
 var handleDeleteBtnClick = function() {
-    // need to add functionality so it adds it to the timeline here as well
     var idToDelete = $(this)
     .parent()
     .attr("data-id");
+
+    var doneTask = {
+      text: this.id,
+      date: getDate()
+    }
+
+    console.log(doneTask.text);
+    console.log(doneTask.date);
+
+    $.ajax("/api/completed", {
+      type: "POST",
+      data: doneTask
+    }).then(function () {
+      console.log("completed task posted")
+      refreshExamples();
+    });
 
   API.deleteExample(idToDelete).then(function() {
     refreshExamples();
