@@ -2,12 +2,21 @@
 // Get references to page elements
 var $movieText = $("#movie-text");
 var $bookText = $("#book-text");
+var $gameText = $("#game-text");
 var $submitMovieBtn = $("#submitMovie");
 var $submitBookBtn = $("#submitBook");
+var $submitGameBtn = $("#submitGame");
 var $movieList = $("#movie-list");
+<<<<<<< HEAD
 var $todoList = $("#example-list");
 var addButton;
 
+=======
+var $bookList = $("#book-list");
+var $gameList = $("#game-list");
+var $exampleDescription = $("#example-description");
+var $exampleList = $("#example-list");
+>>>>>>> 02e68c9cbcb8dfa8778fe2ba37d83458eb4fcc46
 
 // // The API object contains methods for each kind of request we'll make
 var todoList = {
@@ -137,6 +146,8 @@ var handleBookFormSubmit = function(event) {
       addBookButton.on("click", addtoToDo);
     });
   });
+
+  
   
   //   // var example = {
     //   //   text: $exampleText.val().trim(),
@@ -147,8 +158,42 @@ var handleBookFormSubmit = function(event) {
       //   //   refreshExamples();
       //   // });
       
-  $bookText.val("");    
-};
+      $bookText.val("");    
+    };
+        var handleGameFormSubmit = function(event) {
+          event.preventDefault();
+          var gameQuery;
+          gameQuery = $gameText.val().trim().split(" ").join("+");
+          console.log("The game query is: " + gameQuery);
+          
+          $.ajax({
+            url: "https://cors-anywhere.herokuapp.com/https://www.giantbomb.com/api/search/?api_key=9a02d4d2e88aa4d1ec2e2c72519e9b710c37136e&format=json&query=" + gameQuery,
+            method: "GET"
+          }).then(function(response) {
+            console.log(response);
+            var newGameTitle = $("<p>").text("Game Title: " + response.results[0].name).attr("id", "newGame-heading");
+            var newGameDesc = $("<p>").text("Description: " + response.results[0].deck);
+            var newGameImage = $("<img>").attr("src",  response.results[0].image.thumb_url);
+            var addGameButton =  $('<button>').text("Add to To Dos").attr("id", response.results[0].name).addClass("btn btn-primary");
+            
+            $gameList.append('<li>');
+            $gameList.append(newGameTitle, newGameDesc, newGameImage, addGameButton);
+            $gameList.append('</li>');
+        
+            addGameButton.on("click", addtoToDo);
+          });  
+          
+          //   // var example = {
+            //   //   text: $exampleText.val().trim(),
+            //   //   description: $exampleDescription.val().trim()
+            //   // };
+            
+            //   // API.saveExample(example).then(function() {
+              //   //   refreshExamples();
+              //   // });
+              
+          $gameText.val("");    
+        };
     
 var addtoToDo = function(event) {
   // originally in the .then part of create movie 
@@ -179,6 +224,7 @@ var handleDeleteBtnClick = function() {
 };
 
 // // Add event listeners to the submit and delete buttons
+<<<<<<< HEAD
 $submitBtn.on("click", handleFormSubmit);
 $todoList.on("click", ".delete", handleDeleteBtnClick);
 
@@ -228,6 +274,12 @@ addButton.on("click", addtoToDo);
 
 
 
+=======
+$submitMovieBtn.on("click", handleMovieFormSubmit);
+$submitBookBtn.on("click", handleBookFormSubmit);
+$submitGameBtn.on("click", handleGameFormSubmit);
+$exampleList.on("click", ".delete", handleDeleteBtnClick);
+>>>>>>> 02e68c9cbcb8dfa8778fe2ba37d83458eb4fcc46
 
 
 //EXAMPLE CODE GIVEN TO US
