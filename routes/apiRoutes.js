@@ -8,10 +8,22 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/completed", function(req, res) {
+    db.Completed.findAll({}).then(function(dbCompleteds) {
+      res.json(dbCompleteds);
+    });
+  });
+
   // Create a new example
   app.post("/api/examples", function(req, res) {
     db.Todo.create(req.body).then(function(dbtodos) {
       res.json(dbtodos);
+    });
+  });
+
+  app.post("/api/completed", function(req, res) {
+    db.Completed.create(req.body).then(function(dbCompleted) {
+      res.json(dbCompleted);
     });
   });
 
