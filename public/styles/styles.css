@@ -17,3 +17,22 @@
 #movie-label {
   width: 100%;
 }
+
+h1, h4, h3 {
+  text-align: center;
+  font-family: 'Open Sans';
+}
+
+#home {
+  padding: 30px;
+}
+
+.card {
+  color: #333333;
+  font-family: 'Open Sans';
+}
+
+h2 {
+  color: teal;
+  font-family: 'Open Sans';
+}
