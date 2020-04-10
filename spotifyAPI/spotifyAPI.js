@@ -4,17 +4,17 @@ var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 
 
-function spotify(search) {
+function spotify(search, res) {
   // console.log(search)
   // console.log(keys.spotify)
  
   var spotify = new Spotify(keys.spotify);
   spotify.search({ type: 'track', query: search })
     .then(function (response) {
-      console.log("song name", response.tracks.items[0].name)
+      console.log(response.tracks.items[0].name)
+      
+      res.json(response.tracks.items[0]); 
 
-  
-      return response.tracks.items
     })
     .catch(function (err) {
       console.log(err);

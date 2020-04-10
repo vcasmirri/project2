@@ -2,7 +2,7 @@
 var $movieText = $("#movie-text");
 var $bookText = $("#book-text");
 var $gameText = $("#game-text");
-
+var $songText = $("#song-text");
 
 var $submitMovieBtn = $("#submitMovie");
 var $submitBookBtn = $("#submitBook");
@@ -51,12 +51,12 @@ var todoList = {
           headers: {
             "Content-Type": "application/json"
           },
-          type: "POST",
-          url: "api/spotify",
-          data: JSON.stringify(song)
-        })
-      }
-    };
+      type: "POST",
+      url: "api/spotify",
+      data: JSON.stringify($songText)
+    })
+  }
+};
 
     // refreshExamples gets new examples from the db and repopulates the list
     var refreshTodo = function () {
@@ -222,30 +222,13 @@ var handleDeleteBtnClick = function () {
   //----------------------//SpotifyAPI STUFF//------------------//
   $("#spotify-submit").on(click, function () {
     console.log("spotify submit button clicked")
-    spotify();
+    
   });
 
 
   todoList.postSong().then(function (data) {
     var $songs = data.map(function (song) {
-      var $a = $("<a>")
-        .text(song.text)
-        .attr("href", "/example/" + song.id);
-
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": song.id
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
+     
     })
   })
 

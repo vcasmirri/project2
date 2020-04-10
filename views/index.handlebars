@@ -93,7 +93,6 @@
             </div>
           </div>
 
-          {{!-- spotify --}}
           <div class="card">
             <div class="card-header" id="headingThree">
               <h2 class="mb-0">
@@ -114,6 +113,34 @@
                   </span>
                 </div>
                 <ul id="game-list" class="list-unstyled">
+        
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+              
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Songs
+
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="form-group input-group">
+                  <label id="song-label" for="song-text" class="w-100">Search for a Song: </label>
+                  <input type="text" id="song-text" class="form-control" aria-describedby="song-text" placeholder="Song, artist, or album">
+                  <span class="input-group-btn">
+                    <button id="submitSong" class="btn btn-primary float-right">Submit</button>
+                  </span>
+                </div>
+                <ul id="song-list" class="list-unstyled">
         
                 </ul>
               </div>
