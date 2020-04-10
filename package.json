@@ -23,6 +23,7 @@
     "mysql2": "^2.1.0",
     "node": "^13.12.0",
     "node-spotify-api": "^1.1.1",
+    "requirejs": "^2.3.6",
     "sequelize": "^5.21.5",
     "spotify": "^0.3.0"
   },

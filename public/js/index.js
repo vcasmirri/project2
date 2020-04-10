@@ -11,17 +11,6 @@ var addButton;
 
 // // The API object contains methods for each kind of request we'll make
 var todoList = {
-  // getExamples: function () {
-//   saveExample: function(example) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/examples",
-//       data: JSON.stringify(example)
-//     });
-//   },
   getTodo: function() {
     return $.ajax({
       url: "api/todo",
@@ -33,6 +22,29 @@ var todoList = {
       url: "api/todo/" + id,
       type: "DELETE"
     });
+  },
+  postSong: function(){
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "api/spotify",
+      data: JSON.stringify(song)
+
+
+      // getExamples: function () {
+      //   saveExample: function(example) {
+      //     return $.ajax({
+      //       headers: {
+      //         "Content-Type": "application/json"
+      //       },
+      //       type: "POST",
+      //       url: "api/examples",
+      //       data: JSON.stringify(example)
+      //     });
+      //   },
+    })
   }
 };
 
@@ -171,6 +183,54 @@ $submitBtn.on("click", handleFormSubmit);
 $todoList.on("click", ".delete", handleDeleteBtnClick);
 
 
+//----------------------//SpotifyAPI STUFF//------------------//
+$("#spotify-submit").on(click, function () {
+  console.log("spotify submit button clicked")
+  spotify();
+});
+
+
+todoList.postSong().then(function(data){
+  var $songs = data.map(function(song){
+    var $a = $("<a>")
+    .text(song.text)
+    .attr("href", "/example/" + song.id);
+
+  var $li = $("<li>")
+    .attr({
+      class: "list-group-item",
+      "data-id": song.id
+    })
+    .append($a);
+
+  var $button = $("<button>")
+    .addClass("btn btn-danger float-right delete")
+    .text("ｘ");
+
+  $li.append($button);
+
+  return $li;
+  })
+})
+
+
+var spotifyList = $("#spotify-list");
+var addButton;
+var input = $("#spotify-text").val().trim();
+
+var songName = $("<p>").text("Song: " + response.tracks.items[i].name).attr("id", "song-heading");
+var artist = $("<p>").text("Artist: ", response.tracks.items[i].artists[0].name);
+var albumCover = $("<img>").attr("src", response.tracks.items[i].album.images[1].url);
+addButton = $("<button>").text("Add to To Dos").attr("id", response.tracks.items[i].name);
+
+spotifyList.push(songName, artist, albumCover, addButton);
+addButton.on("click", addtoToDo);
+
+
+
+
+
+//EXAMPLE CODE GIVEN TO US
 // // Get references to page elements
 // var $exampleText = $("#example-text");
 // var $exampleDescription = $("#example-description");

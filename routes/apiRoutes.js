@@ -1,4 +1,5 @@
 var db = require("../models");
+var spotify = require("../spotifyAPI/spotifyAPI");
 
 module.exports = function(app) {
   // Get all examples
@@ -20,5 +21,10 @@ module.exports = function(app) {
     db.Todo.destroy({ where: { id: req.params.id } }).then(function(dbtodos) {
       res.json(dbtodos);
     });
+  });
+
+  app.post("/api/spotify", function(req, res) {
+    var spotifyResponse = spotify(req.body);
+    res.json(spotifyResponse); 
   });
 };
