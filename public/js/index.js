@@ -1,8 +1,9 @@
 
 // Get references to page elements
 var $movieText = $("#movie-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
+var $bookText = $("#book-text");
+var $submitMovieBtn = $("#submitMovie");
+var $submitBookBtn = $("#submitBook");
 var $movieList = $("#movie-list");
 var $todoList = $("#example-list");
 var addButton;
@@ -66,7 +67,7 @@ var refreshTodo = function () {
 
 refreshTodo();
 
-var handleFormSubmit = function(event) {
+var handleMovieFormSubmit = function(event) {
   event.preventDefault();
   var movieQuery
   movieQuery = $movieText.val().trim().split(" ").join("+");
@@ -79,11 +80,13 @@ var handleFormSubmit = function(event) {
     var newMovieTitle = $("<p>").text("Movie Title: " + response.Title).attr("id", "newMovie-heading");
     var newMoviePlot = $("<p>").text("Plot: " + response.Plot);
     var newMoviePoster = $("<img>").attr("src",  response.Poster);
-    addButton =  $("<button>").text("Add to To Dos").attr("id", response.Title);
-    // originally created var for button here and then appended
+    var addMovieButton =  $('<button>').text("Add to To Dos").attr("id", response.Title).addClass("btn btn-primary");
     
-    $movieList.prepend(newMovieTitle, newMoviePlot, newMoviePoster, addButton);
-    addButton.on("click", addtoToDo);
+    $movieList.append('<li>');
+    $movieList.append(newMovieTitle, newMoviePlot, newMoviePoster, addMovieButton);
+    $movieList.append('</li>');
+
+    addMovieButton.on("click", addtoToDo);
   });  
   
   //   // var example = {
@@ -97,7 +100,43 @@ var handleFormSubmit = function(event) {
       
   $movieText.val("");    
 };
+  
+var handleBookFormSubmit = function(event) {
+  event.preventDefault();
+  var bookQuery
+  bookQuery = $bookText.val().trim().split(" ").join("+");
+  console.log("The book query is: " + bookQuery);
+  
+  $.ajax({
+    url: "https://www.googleapis.com/books/v1/volumes/?q=" + bookQuery + "&key=AIzaSyD6fZh0lQSvHpa3XivKX12LMo6_rSTjWK4",
+    method: "GET"
+  }).then(function(books) {
+    $.each(books['items'], function (index, book) {
+      var BookCoverUrl = ( book['volumeInfo']['imageLinks'] !== undefined ) ? book['volumeInfo']['imageLinks']['thumbnail'] : 'https://d827xgdhgqbnd.cloudfront.net/wp-content/uploads/2016/04/09121712/book-cover-placeholder.png';
+      var BookHTML = 'Book Title: ' + book['volumeInfo']['title'] + '<br>' +
+      'Author(s): ' + book['volumeInfo']['authors'].join(', ') + '<br>' +
+      '<img src="' + BookCoverUrl + '">';
+      var addBookButton = $('<button id="' + book['volumeInfo']['title'] + '" class="btn btn-primary">Add to To Dos</button>');
+
+      $bookList.append('<li>');
+      $bookList.append(BookHTML, addBookButton);
+      $bookList.append('</li>');
+
+      addBookButton.on("click", addtoToDo);
+    });
+  });
+  
+  //   // var example = {
+    //   //   text: $exampleText.val().trim(),
+    //   //   description: $exampleDescription.val().trim()
+    //   // };
     
+    //   // API.saveExample(example).then(function() {
+      //   //   refreshExamples();
+      //   // });
+      
+  $bookText.val("");    
+};
     
 var addtoToDo = function(event) {
   // originally in the .then part of create movie 
@@ -110,7 +149,6 @@ var addtoToDo = function(event) {
     type: "POST",
     data: newAdd
   }).then(function () {
-    console.log("new movie posted")
     refreshExamples();
   });
 };
@@ -136,7 +174,7 @@ $todoList.on("click", ".delete", handleDeleteBtnClick);
 // // Get references to page elements
 // var $exampleText = $("#example-text");
 // var $exampleDescription = $("#example-description");
-// var $submitBtn = $("#submit");
+// var $submitMovieBtn = $("#submit");
 // var $exampleList = $("#example-list");
 
 // // The API object contains methods for each kind of request we'll make
@@ -194,9 +232,9 @@ $todoList.on("click", ".delete", handleDeleteBtnClick);
 //   });
 // };
 
-// // handleFormSubmit is called whenever we submit a new example
+// // handleMovieFormSubmit is called whenever we submit a new example
 // // Save the new example to the db and refresh the list
-// var handleFormSubmit = function(event) {
+// var handleMovieFormSubmit = function(event) {
 //   event.preventDefault();
 
 //   var example = {
@@ -230,5 +268,5 @@ $todoList.on("click", ".delete", handleDeleteBtnClick);
 // };
 
 // // Add event listeners to the submit and delete buttons
-// $submitBtn.on("click", handleFormSubmit);
+// $submitMovieBtn.on("click", handleMovieFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);

@@ -49,13 +49,13 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
                 <div class="form-group input-group">
-                  <label id="movie-label" for="movie-text">Search for a Movie: </label>
+                  <label id="movie-label" for="movie-text" class="w-100">Search for a Movie: </label>
                   <input type="text" id="movie-text" class="form-control" aria-describedby="example-text" placeholder="Movie Title">
                   <span class="input-group-btn">
-                    <button id="submit" class="btn btn-primary float-right">Submit</button>
+                    <button id="submitMovie" class="btn btn-primary float-right">Submit</button>
                   </span>
                 </div>
-                <ul id="movie-list">
+                <ul id="movie-list" class="list-unstyled">
         
                 </ul>
               </div>
@@ -65,13 +65,22 @@
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Collapsible Group Item #2
+                  Books
                 </button>
               </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
               <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                <div class="form-group input-group">
+                  <label id="book-label" for="book-text" class="w-100">Search for a Book: </label>
+                  <input type="text" id="book-text" class="form-control" aria-describedby="example-text" placeholder="Book Title">
+                  <span class="input-group-btn">
+                    <button id="submitBook" class="btn btn-primary float-right">Submit</button>
+                  </span>
+                </div>
+                <ul id="book-list" class="list-unstyled">
+        
+                </ul>
               </div>
             </div>
           </div>
@@ -102,4 +111,3 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="/js/index.js"></script>
-
