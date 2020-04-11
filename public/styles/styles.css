@@ -1,3 +1,43 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+#example-text {
+  width: 85%;
+}
+
+#newMovie-heading {
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  margin-left: 50px;
+}
+
+#movie-label {
+  width: 100%;
+}
+
+h1, h4, h3 {
+  text-align: center;
+  font-family: 'Open Sans';
+}
+
+#home {
+  padding: 40px;
+}
+
+body {
+  background-image: url(https://image.freepik.com/free-vector/abstract-background-design-with-stars-gray_53876-43534.jpg);
+  background-size: 920px;
+}
+
+.card {
+  color: #333333;
+  font-family: 'Open Sans';
+}
+
+h2 {
+  color: teal;
+  font-family: 'Open Sans';
+}
