@@ -41,6 +41,7 @@
           </li>
           {{/each}}
         </ul>
+        {{!-- movies --}}
         <div class="accordion" id="accordionExample">
           <div class="card">
             <div class="card-header" id="headingOne">
@@ -54,6 +55,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
                 <div class="form-group input-group">
+
                   <label id="movie-label" for="movie-text" class="w-100">Search for a Movie: </label>
                   <input type="text" id="movie-text" class="form-control" aria-describedby="example-text" placeholder="Movie Title">
                   <span class="input-group-btn">
@@ -61,11 +63,11 @@
                   </span>
                 </div>
                 <ul id="movie-list" class="list-unstyled">
-        
                 </ul>
               </div>
             </div>
           </div>
+
           <div class="card">
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
@@ -86,9 +88,11 @@
                 <ul id="book-list" class="list-unstyled">
         
                 </ul>
+              
               </div>
             </div>
           </div>
+
           <div class="card">
             <div class="card-header" id="headingThree">
               <h2 class="mb-0">
@@ -115,13 +119,70 @@
             </div>
           </div>
         </div>
-
-
-
-
       </div>
+
+      <div class="card">
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+              
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Songs
+
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="form-group input-group">
+                  <label id="song-label" for="song-text" class="w-100">Search for a Song: </label>
+                  <input type="text" id="song-text" class="form-control" aria-describedby="song-text" placeholder="Song, artist, or album">
+                  <span class="input-group-btn">
+                    <button id="submitSong" class="btn btn-primary float-right">Submit</button>
+                  </span>
+                </div>
+                <ul id="song-list" class="list-unstyled">
+        
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+            <div class="card-header" id="headingFive">
+              <h2 class="mb-0">
+              
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                  Self-Care
+
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="form-group input-group">
+                  <label id="self-label" for="self-text" class="w-100">Add whatever you need to do to take care of yourself!</label>
+                  <input type="text" id="self-text" class="form-control" aria-describedby="self-text" placeholder="take a long bath">
+                  <span class="input-group-btn">
+                    <button id="submitSelf" class="btn btn-primary float-right">Submit</button>
+                  </span>
+                </div>
+                <ul id="self-list" class="list-unstyled">
+        
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
     </div>
   </div>
+</div>
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

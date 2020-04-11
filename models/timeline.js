@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     text: DataTypes.STRING,
     checked: DataTypes.BOOLEAN,
     user_id: DataTypes.INTEGER,
-    dateChecked: DataTypes.DATEONLY,
+    dateChecked: DataTypes.DATEONLY
     // FOREIGN KEY (user_id) REFERENCES users(id)
   });
   return Todo;
