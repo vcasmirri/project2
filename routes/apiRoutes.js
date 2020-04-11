@@ -37,5 +37,5 @@ module.exports = function(app) {
 
   app.post("/api/spotify", function(req, res) {
     spotify(req.body, res);
-    });
+  });
 };
