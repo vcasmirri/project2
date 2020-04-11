@@ -81,7 +81,7 @@ var handleMovieFormSubmit = function(event) {
     var newMovieTitle = $("<p>").text("Movie Title: " + response.Title).attr("id", "newMovie-heading");
     var newMoviePlot = $("<p>").text("Plot: " + response.Plot);
     var newMoviePoster = $("<img>").attr("src",  response.Poster);
-    var addMovieButton =  $('<button>').text("Add to To Dos").attr("id", response.Title).addClass("btn btn-primary");
+    var addMovieButton =  $('<button>').text("Add to To Dos").attr("id", response.Title).addClass("btn btn-info");
     
     $movieList.append('<li>');
     $movieList.append(newMovieTitle, newMoviePlot, newMoviePoster, addMovieButton);
@@ -117,7 +117,7 @@ var handleBookFormSubmit = function(event) {
       var BookHTML = 'Book Title: ' + book['volumeInfo']['title'] + '<br>' +
       'Author(s): ' + book['volumeInfo']['authors'].join(', ') + '<br>' +
       '<img src="' + BookCoverUrl + '">';
-      var addBookButton = $('<button id="' + book['volumeInfo']['title'] + '" class="btn btn-primary">Add to To Dos</button>');
+      var addBookButton = $('<button id="' + book['volumeInfo']['title'] + '" class="btn btn-info">Add to To Dos</button>');
 
       $bookList.append('<li>');
       $bookList.append(BookHTML, addBookButton);
@@ -154,7 +154,7 @@ var handleBookFormSubmit = function(event) {
             var newGameTitle = $("<p>").text("Game Title: " + response.results[0].name).attr("id", "newGame-heading");
             var newGameDesc = $("<p>").text("Description: " + response.results[0].deck);
             var newGameImage = $("<img>").attr("src",  response.results[0].image.thumb_url);
-            var addGameButton =  $('<button>').text("Add to To Dos").attr("id", response.results[0].name).addClass("btn btn-primary");
+            var addGameButton =  $('<button>').text("Add to To Dos").attr("id", response.results[0].name).addClass("btn btn-info");
             
             $gameList.append('<li>');
             $gameList.append(newGameTitle, newGameDesc, newGameImage, addGameButton);
