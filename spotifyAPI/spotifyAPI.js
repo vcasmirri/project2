@@ -7,10 +7,9 @@ var Spotify = require('node-spotify-api');
 function spotify(obj, res) { 
   var spotify = new Spotify(keys.spotify);
   spotify.search({ type: 'track', query: obj.search })
-    .then(function (response) {
-      console.log(response.tracks.items[0].name)
-      
-      res.json(response.tracks.items[0]); 
+    .then(function (response) { 
+      console.log("response", response)
+      res.json(response); 
 
     })
     .catch(function (err) {

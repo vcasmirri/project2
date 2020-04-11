@@ -222,10 +222,13 @@ var handleSongFormSubmit = function (event) {
 
   API.postSong($songText.val().trim()).then(function(data){
 
-    var songName = $("<p>").text("Song: " + data.name).attr("id", "newSong-heading");
-    var artist = $("<p>").text("Artist: " + data.artists[0].name);
-    var album = $("<p>").text("Album: " + data.album.name);
-    var albumCover = $("<img>").attr("src", data.album.images[1].url);
+    console.log("data", data)
+    for (var i=0; i<5; i++){
+
+    var songName = $("<h5>").text("Song: " + data.tracks.items[i].name).attr("id", "newSong-heading");
+    var artist = $("<p>").text("Artist: " + data.tracks.items[0].artists[0].name);
+    var album = $("<p>").text("Album: " + data.tracks.items[0].album.name);
+    var albumCover = $("<img>").attr("src", data.tracks.items[0].album.images[1].url);
     var addSongButton = $('<button>').text("Add to To Dos").attr("id", data.name).addClass("btn btn-primary");
     console.log(songName)
 
@@ -236,6 +239,7 @@ var handleSongFormSubmit = function (event) {
     $songList.append('</li>');
   
     addSongButton.on("click", addtoToDo);
+    }
   })
   $songText.val("");
 };
@@ -266,29 +270,3 @@ $submitGameBtn.on("click", handleGameFormSubmit);
 $submitSongBtn.on("click", handleSongFormSubmit);
 $submitSelfBtn.on("click", handleSelfFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
-
-
-var handleSelfFormSubmit = function (event) {
-  event.preventDefault();
-
-  var selfQuery = $selfText.val().trim();
-  console.log("self care is: " + selfQuery);
-  var addSelfButton = $('<button>').text("Add to To Dos").attr("id", selfQuery).addClass("btn btn-primary");
-
-  $selfList.append('<li>');
-  $selfList.append(selfQuery, addSelfButton);
-  $selfList.append('</li>');
-
-
-  addSelfButton.on("click", addtoToDo);
-
-  $selfText.val("");
-};
-
-
-$submitSelfBtn.on("click", handleSelfFormSubmit)
-var $selfText = $("#self-text")
-
-var $submitSelfBtn = $("#submitSelf")
-
-var $selfList = $("#self-list");
