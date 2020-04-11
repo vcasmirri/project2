@@ -30,15 +30,12 @@ module.exports = function(app) {
 
   // Delete an example by id
   app.delete("/api/examples/:id", function(req, res) {
-    console.log("should be song text", req.body)
     db.Todo.destroy({ where: { id: req.params.id } }).then(function(dbtodos) {
       res.json(dbtodos);
     });
   });
 
   app.post("/api/spotify", function(req, res) {
-  spotify(req.body, res);
-
-    // res.json(spotifyResponse); 
-  });
+    spotify(req.body, res);
+    });
 };
