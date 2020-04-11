@@ -169,7 +169,7 @@ var handleGameFormSubmit = function (event) {
 
 var addtoToDo = function (event) {
   console.log("add button clicked");
-  console.log(this.id);
+  console.log("this is the id",this.id);
   event.preventDefault();
   var newAdd = {
     text: this.id
