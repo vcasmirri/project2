@@ -24,7 +24,12 @@ h1, h4, h3 {
 }
 
 #home {
-  padding: 30px;
+  padding: 40px;
+}
+
+body {
+  background-image: url(https://image.freepik.com/free-vector/abstract-background-design-with-stars-gray_53876-43534.jpg);
+  background-size: 920px;
 }
 
 .card {
