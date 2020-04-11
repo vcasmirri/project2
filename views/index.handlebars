@@ -1,6 +1,5 @@
 <div id="home">
   <div class="container">
-    <canvas id="mycanvas"></canvas>
     <div class="row">
       <div class="col-10 offset-1">
         {{!-- <h1>{{msg}}</h1> --}}
@@ -117,6 +116,11 @@
                 </ul>
               </div>
             </div>
+
+
+
+
+
           </div>
         </div>
       </div>
@@ -181,6 +185,59 @@
 
 
     </div>
+
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+              Timeline Chart
+            </button>
+          </h2>
+        </div>
+        <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+          <div class="card-body">
+                <canvas id="mycanvas"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTen">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+              Tasks Completed
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Tasks Completed</th>
+                </tr>
+              </thead>
+              <tbody id="tasksDoneTable">
+          
+              </tbody>
+    </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- <canvas id="mycanvas"></canvas> --}}
+    {{!-- <table class="table table-striped">
+		  <thead>
+				<tr>
+					<th>Date</th>
+					<th>Tasks Completed</th>
+        </tr>
+      </thead>
+      <tbody id="tasksDoneTable">
+      
+      </tbody>
+    </table> --}}
   </div>
 </div>
 </div>
