@@ -3,6 +3,59 @@ var spotify = require("../spotifyAPI/spotifyAPI");
 
 module.exports = function(app) {
   // Get all examples
+
+  // user routes
+
+  app.get("/api/users", function(req, res) {
+    // Here we add an "include" property to our options in our findAll query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Post
+    console.log("It can see my route stuff.");
+    db.User.findAll({
+      include: [db.Todo]
+    }).then(function(User) {
+      res.json(User);
+      // console.log("it is returning this user: " + JSON.stringify(User[0].name));
+
+    });
+  });
+
+  app.get("/api/user/:id", function(req, res) {
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Post
+    db.User.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [db.Todo]
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  app.post("/api/users", function(req, res) {
+    db.User.create(req.body).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  app.delete("/api/users/:id", function(req, res) {
+    db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+
+
+
+
+
+
   app.get("/api/examples", function(req, res) {
     db.Todo.findAll({}).then(function(dbtodos) {
       res.json(dbtodos);
