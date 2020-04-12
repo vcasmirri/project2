@@ -242,26 +242,25 @@ var handleDeleteBtnClick = function() {
     .parent()
     .attr("data-id");
 
+  var doneTask = {
+    text: this.id,
+    date: getDate()
+  };
+
+  console.log(doneTask.text);
+  console.log(doneTask.date);
+
+  $.ajax("/api/completed", {
+    type: "POST",
+    data: doneTask
+  }).then(function() {
+    console.log("completed task posted");
+    refreshExamples();
+  });
+
   API.deleteExample(idToDelete).then(function() {
-    var doneTask = {
-      text: this.id,
-      date: getDate()
-    };
-
-    console.log(doneTask.text);
-    console.log(doneTask.date);
-
-    $.ajax("/api/completed", {
-      type: "POST",
-      data: doneTask
-    }).then(function() {
-      console.log("completed task posted");
-      refreshExamples();
-    });
-
-    API.deleteExample(idToDelete).then(function() {
-      refreshExamples();
-    });
+    refreshExamples();
+    location.reload();
   });
 };
 
