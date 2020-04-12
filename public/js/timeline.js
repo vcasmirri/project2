@@ -15,6 +15,7 @@ $(document).ready(function(){
                     if(data[i].date != null) {
                         // date is added to array
                         dates.push(data[i].date);
+                        console.log("date pushed");
                     } else {
                         console.log("date is null");
                     };
@@ -25,11 +26,10 @@ $(document).ready(function(){
                 console.log(data);
                 for (var z in data) {
                     var newTr = $("<tr>");
-                        newTr.append("<td>" + data[z].date + "</td>");
-                        newTr.append("<td>" + data[z].text + "</td>");
+                    newTr.append("<td>" + data[z].date + "</td>");
+                    newTr.append("<td>" + data[z].text + "</td>");
                     $("#tasksDoneTable").append(newTr);
                 }
-
             };
             
             createTableData();
@@ -63,49 +63,49 @@ $(document).ready(function(){
                 dateLog.push(newDate);
             };
             
-        console.log("tasks_completed array: " + tasks_completed);
-        console.log("taskCounter: " + taskCounter); 
-        console.log("dateLog array: " + dateLog);
-  
-        // an array to hold all the counters so the chart can graph
-        var chartData = [];
-        var data;
-        // for loop through each object in the date log that adds the date's totalCounter to the chartData array
-        for (var i=0; i<dateLog.length; i++) {
-            data = dateLog[i].totalCounter;
-            chartData.push(data);
-          };
-        console.log("chartData array: " + chartData);
-
-  
-        // chart creation
-        // grabs canvas ID off the index.handlebars page
-        var ctx = $("#mycanvas");
-        var LineGraph = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: dates,
-            datasets: [{
-              label: "Number of Tasks Completed",
-              data: chartData,
-              backgroundColor: "rgba(162,196,201)",
-              borderColor: "rgba(0,0,0)"
-            }]
-          },
-          options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+            console.log("tasks_completed array: " + tasks_completed);
+            console.log("taskCounter: " + taskCounter); 
+            console.log("dateLog array: " + dateLog);
+            
+            // an array to hold all the counters so the chart can graph
+            var chartData = [];
+            var data;
+            // for loop through each object in the date log that adds the date's totalCounter to the chartData array
+            for (var i=0; i<dateLog.length; i++) {
+                data = dateLog[i].totalCounter;
+                chartData.push(data);
+            };
+            console.log("chartData array: " + chartData);
+            
+            
+            // chart creation
+            // grabs canvas ID off the index.handlebars page
+            var ctx = $("#mycanvas");
+            var LineGraph = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: "Number of Tasks Completed",
+                        data: chartData,
+                        backgroundColor: "rgba(162,196,201)",
+                        borderColor: "rgba(0,0,0)"
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
-                }]
-            }
-          }
-        });
-      },
-      error : function(data) {
-  
-      }
+                }
+            });
+        },
+        error : function(data) {
+            
+        }
     });
-
+    
 });

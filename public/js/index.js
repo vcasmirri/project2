@@ -334,28 +334,29 @@ var handleDeleteBtnClick = function() {
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function() {
+
     var doneTask = {
       text: this.id,
       date: getDate(),
       userid: selectedUser
     }
 
-    console.log(doneTask.text);
-    console.log(doneTask.date);
+  console.log(doneTask.text);
+  console.log(doneTask.date);
 
-    $.ajax("/api/completed", {
-      type: "POST",
-      data: doneTask
-    }).then(function() {
-      console.log("completed task posted");
-      refreshExamples();
-    });
-
-    API.deleteExample(idToDelete).then(function() {
-      refreshExamples();
-    });
+  $.ajax("/api/completed", {
+    type: "POST",
+    data: doneTask
+  }).then(function() {
+    console.log("completed task posted");
+    refreshExamples();
   });
+
+  API.deleteExample(idToDelete).then(function() {
+    refreshExamples();
+    location.reload();
+  });
+
 };
 
 //----------------------//SpotifyAPI STUFF//------------------//
