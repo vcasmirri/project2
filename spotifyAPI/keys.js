@@ -5,4 +5,4 @@ exports.spotify = {
 
 exports.books = {
   key: process.env.BOOKS_KEY
-}
+};
