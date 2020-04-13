@@ -26,6 +26,9 @@ var addMovieButton;
 var $userSubmit = $("#userSubmit");
 var $userSelect = $("#userSelect");
 var selectedUser;
+var selectedUserName;
+
+// var keys = require("../../spotifyAPI/keys");
 
 // // The API object contains methods for each kind of request we'll make
 var API = {
@@ -79,8 +82,9 @@ var userSelect = function (event) {
   console.log("You selected: " + selectedUser);
   var currentUserDiv = $("#currentUser");
   currentUserDiv.empty();
-  currentUserDiv.append("Hi " + $(this).attr("data-name") + "! Enter some quaranto-dos.");
-
+  selectedUserName = $(this).attr("data-name");
+  currentUserDiv.append("Hi " + selectedUserName + "! Enter some quaranto-dos.");
+  refreshExamples();
 };
 
 var refreshUsers = function () {
@@ -122,29 +126,39 @@ refreshUsers();
 // refreshExamples gets new examples from the db and repopulates the list
 var refreshExamples = function() {
   API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      console.log(example);
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
-
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id,
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ")
-        .attr("id", example.text);
-
-      $li.append($button);
-
-      return $li;
+    console.log("This is my returned data: " + JSON.stringify(data));
+    var currentUserExamples = [];
+    for (i=0; i < data.length; i++) {
+      if (data[i].UserId == selectedUser) {
+        currentUserExamples.push(data[i])
+      }
+    };
+    console.log("This is currentUserExamples: " + currentUserExamples);
+    var $examples = currentUserExamples.map(function(example) {
+      console.log("This is the returned example: " + JSON.stringify(example));
+          var $a = $("<a>")
+          .text(example.text)
+          .attr("href", "/example/" + example.id);
+  
+        var $li = $("<li>")
+          .attr({
+            class: "list-group-item",
+            "data-id": example.id,
+          })
+          .append($a);
+  
+        var $button = $("<button>")
+          .addClass("btn btn-danger float-right delete")
+          .text("ｘ")
+          .attr("id", example.text);
+  
+        $li.append($button);
+  
+        return $li;
+  
+     
     });
-
+    // console.log($examples);
     $exampleList.empty();
     $exampleList.append($examples);
   });
@@ -156,6 +170,7 @@ refreshExamples();
 
 var handleMovieFormSubmit = function(event) {
   event.preventDefault();
+  $movieList.empty();
   var movieQuery;
   movieQuery = $movieText
     .val()
@@ -189,6 +204,7 @@ var handleMovieFormSubmit = function(event) {
       newMoviePoster,
       addMovieButton
     );
+    
     $movieList.append("</li>");
 
     addMovieButton.on("click", addtoToDo);
@@ -198,6 +214,7 @@ var handleMovieFormSubmit = function(event) {
 
 var handleBookFormSubmit = function(event) {
   event.preventDefault();
+  $bookList.empty();
   var bookQuery;
   bookQuery = $bookText
     .val()
@@ -210,7 +227,7 @@ var handleBookFormSubmit = function(event) {
     url:
       "https://www.googleapis.com/books/v1/volumes/?q=" +
       bookQuery +
-      "&key=AIzaSyD6fZh0lQSvHpa3XivKX12LMo6_rSTjWK4",
+      "&key=" + keys.books,
     method: "GET"
   }).then(function(books) {
     $.each(books.items, function(index, book) {
@@ -246,6 +263,7 @@ var handleBookFormSubmit = function(event) {
 
 var handleGameFormSubmit = function(event) {
   event.preventDefault();
+  $gameList.empty();
   var gameQuery;
   gameQuery = $gameText
     .val()
@@ -312,6 +330,7 @@ var addtoToDo = function(event) {
   event.preventDefault();
   var newAdd = {
     text: this.id,
+    user: selectedUserName,
     UserId: selectedUser
   };
   $.ajax("/api/examples", {
@@ -362,7 +381,7 @@ var handleDeleteBtnClick = function() {
 //----------------------//SpotifyAPI STUFF//------------------//
 var handleSongFormSubmit = function(event) {
   event.preventDefault();
-
+  $songList.empty();
   API.postSong($songText.val().trim()).then(function(data) {
     console.log("data", data);
     for (var i = 0; i < 3; i++) {
@@ -397,7 +416,7 @@ var handleSongFormSubmit = function(event) {
 //-----------------SELF-CARE--------------------------//
 var handleSelfFormSubmit = function(event) {
   event.preventDefault();
-
+  $selfList.empty();
   var selfQuery = $selfText.val().trim();
   console.log("self care is: " + selfQuery);
   var addSelfButton = $("<button>")
