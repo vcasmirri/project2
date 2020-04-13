@@ -380,7 +380,7 @@ var handleSongFormSubmit = function(event) {
       var addSongButton = $("<button>")
         .text("Add to To Dos")
         .attr("id", data.name)
-        .addClass("btn btn-primary");
+        .addClass("btn btn-info");
       console.log(songName);
 
       console.log("stuff", artist);
@@ -403,7 +403,7 @@ var handleSelfFormSubmit = function(event) {
   var addSelfButton = $("<button>")
     .text("Add to To Dos")
     .attr("id", selfQuery)
-    .addClass("btn btn-primary");
+    .addClass("btn btn-info");
 
   $selfList.append("<li>");
   $selfList.append(selfQuery, addSelfButton);
