@@ -16,7 +16,6 @@ module.exports = function(app) {
     }).then(function(User) {
       res.json(User);
       // console.log("it is returning this user: " + JSON.stringify(User[0].name));
-
     });
   });
 
@@ -49,12 +48,6 @@ module.exports = function(app) {
       res.json(dbUser);
     });
   });
-
-
-
-
-
-
 
   app.get("/api/examples", function(req, res) {
     db.Todo.findAll({}).then(function(dbtodos) {
