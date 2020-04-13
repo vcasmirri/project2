@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "password",
-    "database": "quarantine_db",
-    "host": "localhost",
+    "username": "ss2w7tcqnculguxp",
+    "password": "q7g4c1y6jqrznylm",
+    "database": "kdxoxh8uodo5w7ru",
+    "host": "hcm4e9frmbwfez47.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

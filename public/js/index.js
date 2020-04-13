@@ -398,7 +398,7 @@ var handleSongFormSubmit = function(event) {
       );
       var addSongButton = $("<button>")
         .text("Add to To Dos")
-        .attr("id", data.name)
+        .attr("id", data.tracks.items[i].name)
         .addClass("btn btn-info");
       console.log(songName);
 
