@@ -2,8 +2,8 @@ module.exports = function(sequelize, DataTypes) {
   var Todo = sequelize.define("Todo", {
     text: DataTypes.STRING,
     checked: DataTypes.BOOLEAN,
-
     dateChecked: DataTypes.DATEONLY,
+    user: DataTypes.STRING
     // FOREIGN KEY (user_id) REFERENCES users(id)
   });
   Todo.associate = function(models) {
