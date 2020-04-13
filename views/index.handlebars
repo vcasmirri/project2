@@ -33,6 +33,38 @@
         
         </ul> --}}
 
+{{!-- User Dropdown --}}
+
+        <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <ul id="userDrop" class="list-group">
+      {{#each users}}
+          <li data-id="{{this.id}}" class="list-group-item">
+            <a href="users/{{this.id}}">{{this.name}}</a>
+          </li>
+          {{/each}}
+    </ul>>
+  </div>
+</div>
+{{!-- Add new user form --}}
+
+<div id="currentUser">
+  
+</div>
+
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="newUser" aria-describedby="emailHelp" placeholder="Enter new user">
+  </div>
+  <button type="submit" class="btn btn-primary" id="userSubmit">Submit</button>
+</form>
+
+{{!-- Example list --}}
+
         <ul id="example-list" class="list-group">
           {{#each examples}}
           <li data-id="{{this.id}}" class="list-group-item">
@@ -40,7 +72,9 @@
           </li>
           {{/each}}
         </ul>
-        {{!-- movies --}}
+
+{{!-- Section categories/accordions --}}
+
         <div class="accordion" id="accordionExample">
           <div class="card">
             <div class="card-header" id="headingOne">

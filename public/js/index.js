@@ -5,6 +5,7 @@ var $gameText = $("#game-text");
 var $songText = $("#song-text");
 var $selfText = $("#self-text");
 
+var $userText = $("#newUser");
 var $submitMovieBtn = $("#submitMovie");
 var $submitBookBtn = $("#submitBook");
 var $submitGameBtn = $("#submitGame");
@@ -17,10 +18,14 @@ var $gameList = $("#game-list");
 var $songList = $("#song-list");
 var $selfList = $("#self-list");
 
+var $userDrop = $("#userDrop");
 var $exampleDescription = $("#example-description");
 var $exampleList = $("#example-list");
 
 var addMovieButton;
+var $userSubmit = $("#userSubmit");
+var $userSelect = $("#userSelect");
+var selectedUser;
 
 // // The API object contains methods for each kind of request we'll make
 var API = {
@@ -52,13 +57,73 @@ var API = {
       url: "api/spotify",
       data: JSON.stringify({ search: song })
     });
-  }
+  },
+  getUsers: function() {
+    return $.ajax({
+      url: "api/users",
+      type: "GET"
+    })
+  },
+  // addUser: function() {
+  //   return $.ajax({
+  //     url: "api/users",
+  //     type: "POST"
+  //   })
+  // }
 };
+
+// populate user dropdown with existing users when new user is added.
+
+var userSelect = function (event) {
+  selectedUser = $(this).attr("data-id");
+  console.log("You selected: " + selectedUser);
+  var currentUserDiv = $("#currentUser");
+  currentUserDiv.empty();
+  currentUserDiv.append("Hi " + $(this).attr("data-name") + "! Enter some quaranto-dos.");
+
+};
+
+var refreshUsers = function () {
+  console.log("refreshUsers is getting called.");
+  API.getUsers().then(function(data) {
+    var $users = data.map(function(user) {
+      // var $a = $("<a>")
+      // .text(user.name)
+      // .attr("id", "userSelect");
+
+      var $li = $("<li>")
+        .text(user.name)
+        .attr({
+          class: "list-group-item",
+          "data-id": user.id,
+          "data-name": user.name,
+          id: "userSelect"
+        });
+        // $li.append($a);
+   
+      console.log("refreshUsers is trying to add user.name: " + user.name);
+      return $li;
+    })
+
+    $userDrop.empty();
+    $userDrop.append($users);
+  })
+  
+};
+
+$(document.body).on("click", "#userSelect", userSelect);
+
+// $userSelect.on("click", userSelect);
+
+
+
+refreshUsers();
 
 // refreshExamples gets new examples from the db and repopulates the list
 var refreshExamples = function() {
   API.getExamples().then(function(data) {
     var $examples = data.map(function(example) {
+      console.log(example);
       var $a = $("<a>")
         .text(example.text)
         .attr("href", "/example/" + example.id);
@@ -66,7 +131,7 @@ var refreshExamples = function() {
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": example.id,
         })
         .append($a);
 
@@ -86,6 +151,8 @@ var refreshExamples = function() {
 };
 
 refreshExamples();
+
+
 
 var handleMovieFormSubmit = function(event) {
   event.preventDefault();
@@ -216,18 +283,43 @@ var handleGameFormSubmit = function(event) {
   $gameText.val("");
 };
 
+
+// User field testing
+function upsertUser(userData) {
+  $.post("/api/users", userData);
+};
+
+// Add new user
+
+var newUserSubmit = function(event) {
+  event.preventDefault();
+  var userEntry;
+  userEntry = $userText.val().trim().split(" ").join("+");
+  console.log("The new user added is: " + userEntry);
+  upsertUser({
+    name: userEntry
+  });
+  refreshUsers();
+  location.reload();
+};
+
+
+// end testing
+
 var addtoToDo = function(event) {
   console.log("add button clicked");
   console.log("this is the id", this.id);
   event.preventDefault();
   var newAdd = {
-    text: this.id
+    text: this.id,
+    UserId: selectedUser
   };
   $.ajax("/api/examples", {
     type: "POST",
     data: newAdd
   }).then(function() {
     refreshExamples();
+
   });
 };
 
@@ -242,10 +334,12 @@ var handleDeleteBtnClick = function() {
     .parent()
     .attr("data-id");
 
-  var doneTask = {
-    text: this.id,
-    date: getDate()
-  };
+
+    var doneTask = {
+      text: this.id,
+      date: getDate(),
+      userid: selectedUser
+    }
 
   console.log(doneTask.text);
   console.log(doneTask.date);
@@ -262,6 +356,7 @@ var handleDeleteBtnClick = function() {
     refreshExamples();
     location.reload();
   });
+
 };
 
 //----------------------//SpotifyAPI STUFF//------------------//
@@ -325,3 +420,107 @@ $submitGameBtn.on("click", handleGameFormSubmit);
 $submitSongBtn.on("click", handleSongFormSubmit);
 $submitSelfBtn.on("click", handleSelfFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+$userSubmit.on("click", newUserSubmit);
+
+
+
+
+// // Get references to page elements
+// var $exampleText = $("#example-text");
+// var $exampleDescription = $("#example-description");
+// var $submitMovieBtn = $("#submit");
+// var $exampleList = $("#example-list");
+
+// // The API object contains methods for each kind of request we'll make
+// var API = {
+//   saveExample: function(example) {
+//     return $.ajax({
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       type: "POST",
+//       url: "api/examples",
+//       data: JSON.stringify(example)
+//     });
+//   },
+//   getExamples: function() {
+//     return $.ajax({
+//       url: "api/examples",
+//       type: "GET"
+//     });
+//   },
+//   deleteExample: function(id) {
+//     return $.ajax({
+//       url: "api/examples/" + id,
+//       type: "DELETE"
+//     });
+//   }
+// };
+
+// // refreshExamples gets new examples from the db and repopulates the list
+// var refreshExamples = function() {
+//   API.getExamples().then(function(data) {
+//     var $examples = data.map(function(example) {
+//       var $a = $("<a>")
+//         .text(example.text)
+//         .attr("href", "/example/" + example.id);
+
+//       var $li = $("<li>")
+//         .attr({
+//           class: "list-group-item",
+//           "data-id": example.id
+//         })
+//         .append($a);
+
+//       var $button = $("<button>")
+//         .addClass("btn btn-danger float-right delete")
+//         .text("ｘ");
+
+//       $li.append($button);
+
+//       return $li;
+//     });
+
+//     $exampleList.empty();
+//     $exampleList.append($examples);
+//   });
+// };
+
+// // handleMovieFormSubmit is called whenever we submit a new example
+// // Save the new example to the db and refresh the list
+// var handleMovieFormSubmit = function(event) {
+//   event.preventDefault();
+
+//   var example = {
+//     text: $exampleText.val().trim(),
+//     description: $exampleDescription.val().trim()
+//   };
+
+//   if (!(example.text && example.description)) {
+//     alert("You must enter an example text and description!");
+//     return;
+//   }
+
+//   API.saveExample(example).then(function() {
+//     refreshExamples();
+//   });
+
+//   $exampleText.val("");
+//   $exampleDescription.val("");
+// };
+
+// // handleDeleteBtnClick is called when an example's delete button is clicked
+// // Remove the example from the db and refresh the list
+// var handleDeleteBtnClick = function() {
+//   var idToDelete = $(this)
+//     .parent()
+//     .attr("data-id");
+
+//   API.deleteExample(idToDelete).then(function() {
+//     refreshExamples();
+//   });
+// };
+
+// // Add event listeners to the submit and delete buttons
+// $submitMovieBtn.on("click", handleMovieFormSubmit);
+// $exampleList.on("click", ".delete", handleDeleteBtnClick);
