@@ -1,3 +1,5 @@
 models/index.js
 node_modules
 public/js/timeline.js
+index.js
+user.js

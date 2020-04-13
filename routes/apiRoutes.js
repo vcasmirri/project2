@@ -55,7 +55,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get("/completed", function(req, res) {
+  app.get("/api/completed", function(req, res) {
     db.Completed.findAll({}).then(function(dbCompleteds) {
       res.json(dbCompleteds);
     });

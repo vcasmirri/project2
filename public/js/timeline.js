@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url : "http://localhost:3000/completed",
+        url : "https://stark-badlands-78659.herokuapp.com/completed",
         type : "GET",
         success : function(data){
             console.log(data);
