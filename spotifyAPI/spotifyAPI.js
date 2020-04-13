@@ -1,7 +1,12 @@
 require("dotenv").config();
 
-var keys = require("./keys.js");
+// var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
+
+S3Handler = new S3Handler(
+  System.getenv("SPOTIFY_ID"),
+  System.getenv("SPOTIFY_SECRET")
+);
 
 function spotify(obj, res) {
   var spotify = new Spotify(keys.spotify);
