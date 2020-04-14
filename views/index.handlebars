@@ -36,8 +36,8 @@
 {{!-- User Dropdown --}}
 
         <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
+  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Select User Name 
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <ul id="userDrop" class="list-group">
@@ -46,7 +46,7 @@
             <a href="users/{{this.id}}">{{this.name}}</a>
           </li>
           {{/each}}
-    </ul>>
+    </ul>
   </div>
 </div>
 {{!-- Add new user form --}}
@@ -57,7 +57,7 @@
 
 <form>
   <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name" id="name">New User? Enter your name:</label>
     <input type="text" class="form-control" id="newUser" aria-describedby="emailHelp" placeholder="Enter new user">
   </div>
   <button type="submit" class="btn btn-info" id="userSubmit">Submit</button>
@@ -205,7 +205,7 @@
       
 
 
-    <div class="accordion" id="accordionExample">
+    <div class="accordion">
       <div class="card">
         <div class="card-header" id="headingTwo">
           <h2 class="mb-0">
