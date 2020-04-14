@@ -23,6 +23,11 @@ h1, h4, h3 {
   font-family: 'Open Sans';
 }
 
+#name {
+  font-family: 'Open Sans';
+  padding-top: 20px;
+}
+
 #home {
   padding: 40px;
 }
@@ -40,4 +45,8 @@ body {
 h2 {
   color: teal;
   font-family: 'Open Sans';
+}
+
+#accordionExample {
+  padding-top: 20px;
 }
